@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - name: Check | Rustup setup
+        run: rustup toolchain list
       # - name: Setup | Rust
       #   uses: actions-rs/toolchain@v1
       #   with:
