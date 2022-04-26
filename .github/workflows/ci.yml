@@ -28,7 +28,7 @@ jobs:
           toolchain: ${{ env.rust_toolchain }}
           components: rustfmt, clippy
       - name: Install | Rust toolchain
-        run: sudo su -c "bash <(wget -qO- ${{ env.esp_rust_toolchain }})"
+        run: wget -O - ${{ env.esp_rust_toolchain }} | bash
       - name: Check | Use esp toolchain
         run: rustup default esp
       - name: Install | Espflash
