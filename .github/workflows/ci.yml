@@ -13,8 +13,8 @@ env:
 
 jobs:
   compile:
-    name: Compile
-    runs-on: ubuntu-latest
+    name: Build
+    container: espressif/idf-rust:latest
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
