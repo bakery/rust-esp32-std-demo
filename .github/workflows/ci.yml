@@ -8,6 +8,10 @@ on:
   schedule:
     - cron: "50 6 * * *"
 
+env:
+  rust_toolchain: nightly-2022-04-07
+  esp_rust_toolchain: https://raw.githubusercontent.com/esp-rs/rust-build/main/install-rust-toolchain.sh
+
 jobs:
   compile:
     name: Build
@@ -18,8 +22,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Install | Packages
         run: sudo apt-get install -y git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5
+      - name: Setup | Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ env.rust_toolchain }}
+          components: rustfmt, clippy
       - name: Install | Rust toolchain
-        run: sudo su -c "bash <(wget -qO- https://raw.githubusercontent.com/esp-rs/rust-build/main/install-rust-toolchain.sh)"
+        run: sudo su -c "bash <(wget -qO- ${{ env.esp_rust_toolchain }})"
       - name: Check | Use esp toolchain
         run: rustup default esp
       - name: Install | Espflash
