@@ -19,8 +19,13 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - name: Check | Rustup setup
-        run: rustup toolchain list
+      - name: Check | Use esp toolchain
+        run: rustup default esp
+      - name: Build | Cargo build
+        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo build --features native
+      - name: Debug | Show and tell
+        run: ls ./target/xtensa-esp32-espidf/debug
+
       # - name: Setup | Rust
       #   uses: actions-rs/toolchain@v1
       #   with:
