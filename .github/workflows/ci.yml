@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - name: Install | Packages
+        run: apt-get install -y git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5
       - name: Check | Use esp toolchain
         run: rustup default esp
       - name: Install | Espflash
