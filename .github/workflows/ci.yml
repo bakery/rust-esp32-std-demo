@@ -14,6 +14,7 @@ env:
 jobs:
   compile:
     name: Build
+    runs-on: ubuntu-latest
     container: espressif/idf-rust:latest
     steps:
       - name: Setup | Checkout
