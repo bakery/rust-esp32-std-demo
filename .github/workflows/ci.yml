@@ -8,14 +8,11 @@ on:
   schedule:
     - cron: "50 6 * * *"
 
-env:
-  rust_toolchain: nightly-2022-04-07
-
 jobs:
   compile:
     name: Build
     runs-on: ubuntu-latest
-    container: espressif/idf-rust:latest
+    # container: espressif/idf-rust:latest
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
@@ -33,6 +30,14 @@ jobs:
         run: espflash ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo save-image esp32 ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo firmware.bin
       - name: Debug | Show and tell
         run: ls ./target/xtensa-esp32-espidf/debug
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          title
+          files: |
+            LICENSE.txt
+            *.jar
 
       # - name: Setup | Rust
       #   uses: actions-rs/toolchain@v1
