@@ -9,7 +9,7 @@ on:
     - cron: "50 6 * * *"
 
 env:
-  rust_toolchain: nightly-2022-04-07
+  rust_toolchain: nightly-x86_64-unknown-linux-gnu
   esp_rust_toolchain: https://raw.githubusercontent.com/esp-rs/rust-build/main/install-rust-toolchain.sh
 
 jobs:
