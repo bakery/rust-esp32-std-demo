@@ -8,27 +8,27 @@ on:
   schedule:
     - cron: "50 6 * * *"
 
-env:
-  rust_toolchain: nightly-x86_64-unknown-linux-gnu
-  esp_rust_toolchain: https://raw.githubusercontent.com/esp-rs/rust-build/main/install-rust-toolchain.sh
+# env:
+#   rust_toolchain: nightly-x86_64-unknown-linux-gnu
+#   esp_rust_toolchain: https://raw.githubusercontent.com/esp-rs/rust-build/main/install-rust-toolchain.sh
 
 jobs:
   compile:
     name: Build
     runs-on: ubuntu-latest
-    # container: espressif/idf-rust:latest
+    container: espressif/idf-rust:latest
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - name: Install | Packages
-        run: sudo apt-get install -y git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5
-      - name: Setup | Rust
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: ${{ env.rust_toolchain }}
-          components: rustfmt, clippy
-      - name: Install | Rust toolchain
-        run: wget -O - ${{ env.esp_rust_toolchain }} | bash
+      # - name: Install | Packages
+      #   run: sudo apt-get install -y git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5
+      # - name: Setup | Rust
+      #   uses: actions-rs/toolchain@v1
+      #   with:
+      #     toolchain: ${{ env.rust_toolchain }}
+      #     components: rustfmt, clippy
+      # - name: Install | Rust toolchain
+      #   run: wget -O - ${{ env.esp_rust_toolchain }} | bash
       - name: Check | Use esp toolchain
         run: rustup default esp
       - name: Install | Espflash
