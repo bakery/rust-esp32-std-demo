@@ -30,14 +30,14 @@ jobs:
         run: espflash ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo save-image esp32 ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo firmware.bin
       - name: Debug | Show and tell
         run: ls ./target/xtensa-esp32-espidf/debug
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          title
-          files: |
-            LICENSE.txt
-            *.jar
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     prerelease: false
+      #     title
+      #     files: |
+      #       LICENSE.txt
+      #       *.jar
 
       # - name: Setup | Rust
       #   uses: actions-rs/toolchain@v1
