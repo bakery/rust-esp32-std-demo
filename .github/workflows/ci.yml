@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - ci
-  pull_request:
-  schedule:
-    - cron: "50 6 * * *"
 
 # env:
 #   rust_toolchain: nightly-x86_64-unknown-linux-gnu
