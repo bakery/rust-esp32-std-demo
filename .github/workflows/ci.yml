@@ -20,18 +20,12 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - name: Check | Ls
-        run: ls -al
       - name: Build | Cargo
-        run: cargo +esp build
-      # - name: Check | Espflash
-      #  run: cargo espflash --version
-      # - name: Build | Cargo build
-      #  run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo build
-      # - name: Build | Extract firmware file
-      #  run: espflash ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo save-image esp32 ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo firmware.bin
-      # - name: Debug | Show and tell
-      #  run: ls ./target/xtensa-esp32-espidf/debug
+        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp build
+      - name: Debug | Show and tell
+        run: ls ./target/xtensa-esp32-espidf/debug
+      - name: Build | Extract firmware file
+        run: cargo espflash ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo save-image esp32 ./target/xtensa-esp32-espidf/debug/rust-esp32-std-demo firmware.bin      
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
       #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
