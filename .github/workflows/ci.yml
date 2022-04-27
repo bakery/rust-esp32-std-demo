@@ -32,9 +32,7 @@ jobs:
       - name: Check | Use esp toolchain
         run: rustup default esp
       - name: Install | Espflash
-        run: cargo install espflash
-      - name: Check | Espflash
-        run: espflash --version
+        run: cargo install cargo-espflash
       - name: Build | Cargo build
         run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo build
       - name: Build | Extract firmware file
