@@ -20,19 +20,10 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      # - name: Install | Packages
-      #   run: sudo apt-get install -y git curl gcc ninja-build cmake libudev-dev python3 python3-pip libusb-1.0-0 libssl-dev pkg-config libtinfo5
-      # - name: Setup | Rust
-      #   uses: actions-rs/toolchain@v1
-      #   with:
-      #     toolchain: ${{ env.rust_toolchain }}
-      #     components: rustfmt, clippy
-      # - name: Install | Rust toolchain
-      #   run: wget -O - ${{ env.esp_rust_toolchain }} | bash
       - name: Check | Use esp toolchain
         run: rustup default esp
-      - name: Install | Espflash
-        run: cargo install cargo-espflash
+      - name: Check | Espflash
+        run: cargo espflash --version
       - name: Build | Cargo build
         run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo build
       - name: Build | Extract firmware file
