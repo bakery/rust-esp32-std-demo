@@ -20,10 +20,8 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - name: Check | Look around
-        run: ls -al
-      - name: Check | Rust jazz
-        run: rustup toolchain list
+      - name: Build | Cargo
+        run: cargo +esp build
       # - name: Check | Espflash
       #  run: cargo espflash --version
       # - name: Build | Cargo build
