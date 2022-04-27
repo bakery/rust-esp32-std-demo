@@ -16,10 +16,12 @@ jobs:
   compile:
     name: Build
     runs-on: ubuntu-latest
-    container: espressif/idf-rust:latest
+    container: espressif/idf-rust-examples
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - name: Check | Ls
+        run: ls -al
       - name: Build | Cargo
         run: cargo +esp build
       # - name: Check | Espflash
