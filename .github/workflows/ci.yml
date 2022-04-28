@@ -24,6 +24,14 @@ jobs:
         run: echo ${{ github.run_number }}
       - name: Output Run Attempt
         run: echo ${{ github.run_attempt }}
+      - name: Save Run ID
+        run: echo "${{ github.run_number }}" >> version-data.txt
+      - name: Add and commit
+        run: git add version-data.txt
+      - name: Add and commit
+        run: git commit "update build number to ${{ github.run_number }}"
+      - name: Push
+        run: git push origin $env:GITHUB_REF_NAME
       - name: Configure | Esp toolchain
         run: rustup default esp
       - name: Build | Cargo
