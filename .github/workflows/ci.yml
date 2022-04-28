@@ -16,9 +16,18 @@ jobs:
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Get version
         id: cargo-get-version
-        uses: "bakery/actions-cargo-get-version@v1"
+        uses: "bakery/actions-cargo-get-version@v1.1"
       - name: Debug | Show version
         run: echo "Detected version is ${{ steps.cargo-get-version.outputs.version }}"
+      - name: Cargo | Set version
+        id: cargo-set-version
+        uses: "bakery/actions-cargo-set-version@v1.2.2"
+        with:
+          cargoFile: "./Cargo.toml"
+          version: "${{ github.run_id }}"
+          buildNumberOnly: true
+      - name: Debug | Updated cargo file
+        run: echo "${{ steps.cargo-set-version.outputs.content }}"
       - name: Output Run ID
         run: echo ${{ github.run_id }}
       - name: Output Run Number
@@ -36,17 +45,17 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-      - name: Configure | Esp toolchain
-        run: rustup default esp
-      - name: Build | Cargo
-        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo espflash save-image firmware.bin
-      - name: Debug | Show and tell
-        run: ls -al
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Test firmware build"
-          files: |
-            firmware.bin
+      # - name: Configure | Esp toolchain
+      #   run: rustup default esp
+      # - name: Build | Cargo
+      #   run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo espflash save-image firmware.bin
+      # - name: Debug | Show and tell
+      #   run: ls -al
+      # - uses: "marvinpinto/action-automatic-releases@latest"
+      #   with:
+      #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #     automatic_release_tag: "latest"
+      #     prerelease: true
+      #     title: "Test firmware build"
+      #     files: |
+      #       firmware.bin
