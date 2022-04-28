@@ -14,6 +14,12 @@ jobs:
       - name: Setup | Checkout
         uses: actions/checkout@v2
       - uses: fregante/setup-git-user@v1.0.1
+      - name: Output Run ID
+        run: echo ${{ github.run_id }}
+      - name: Output Run Number
+        run: echo ${{ github.run_number }}
+      - name: Output Run Attempt
+        run: echo ${{ github.run_attempt }}
       - name: Cargo | Get version
         id: cargo-get-version
         uses: "bakery/actions-cargo-get-version@v1.1"
@@ -21,19 +27,12 @@ jobs:
         run: echo "Detected version is ${{ steps.cargo-get-version.outputs.version }}"
       - name: Cargo | Set version
         id: cargo-set-version
-        uses: "bakery/actions-cargo-set-version@v1.3.0"
+        uses: "bakery/actions-cargo-set-version@v1.4.0"
         with:
           cargoFile: "./Cargo.toml"
           version: "${{ github.run_id }}"
           buildNumberOnly: true
-      - name: Output Run ID
-        run: echo ${{ github.run_id }}
-      - name: Output Run Number
-        run: echo ${{ github.run_number }}
-      - name: Output Run Attempt
-        run: echo ${{ github.run_attempt }}
-      - name: Update Cargo.toml
-        run: echo "${{ steps.cargo-set-version.outputs.content }}" > Cargo.toml
+          overwriteCargoFile: true
       - name: Add and commit
         run: git add Cargo.toml
       - name: Add and commit
@@ -46,14 +45,14 @@ jobs:
       # - name: Configure | Esp toolchain
       #   run: rustup default esp
       # - name: Build | Cargo
-      #   run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo espflash save-image firmware.bin
+      #   run: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo espflash save-image firmware-${{ steps.cargo-set-version.outputs.version }}.bin
       # - name: Debug | Show and tell
       #   run: ls -al
       # - uses: "marvinpinto/action-automatic-releases@latest"
       #   with:
       #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-      #     automatic_release_tag: "latest"
+      #     automatic_release_tag: "${{ steps.cargo-set-version.outputs.version }}"
       #     prerelease: true
-      #     title: "Test firmware build"
+      #     title: "Firmware build ${{ steps.cargo-set-version.outputs.version }}"
       #     files: |
-      #       firmware.bin
+      #       firmware-${{ steps.cargo-set-version.outputs.version }}.bin
