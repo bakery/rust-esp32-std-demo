@@ -13,6 +13,7 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Get version
         id: cargo-get-version
         uses: "bakery/actions-cargo-get-version@v1"
