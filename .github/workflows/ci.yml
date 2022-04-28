@@ -18,6 +18,12 @@ jobs:
         uses: "bakery/actions-cargo-get-version@v1"
       - name: Debug | Show version
         run: echo "Detected version is ${{ steps.cargo-get-version.outputs.version }}"
+      - name: Output Run ID
+        run: echo ${{ github.run_id }}
+      - name: Output Run Number
+        run: echo ${{ github.run_number }}
+      - name: Output Run Attempt
+        run: echo ${{ github.run_attempt }}
       - name: Configure | Esp toolchain
         run: rustup default esp
       - name: Build | Cargo
