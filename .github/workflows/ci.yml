@@ -30,7 +30,7 @@ jobs:
         uses: "bakery/actions-cargo-set-version@v1.4.0"
         with:
           cargoFile: "./Cargo.toml"
-          version: "${{ github.run_id }}"
+          version: "${{ github.run_number }}"
           buildNumberOnly: true
           overwriteCargoFile: true
       - name: Add and commit
