@@ -31,8 +31,11 @@ jobs:
         run: git add version-data.txt
       - name: Add and commit
         run: git commit -m "update build number to ${{ github.run_id }}"
-      - name: Push
-        run: git push origin $env:GITHUB_REF_NAME
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       - name: Configure | Esp toolchain
         run: rustup default esp
       - name: Build | Cargo
