@@ -21,25 +21,23 @@ jobs:
         run: echo "Detected version is ${{ steps.cargo-get-version.outputs.version }}"
       - name: Cargo | Set version
         id: cargo-set-version
-        uses: "bakery/actions-cargo-set-version@v1.2.2"
+        uses: "bakery/actions-cargo-set-version@v1.3.0"
         with:
           cargoFile: "./Cargo.toml"
           version: "${{ github.run_id }}"
           buildNumberOnly: true
-      - name: Debug | Updated cargo file
-        run: echo "${{ steps.cargo-set-version.outputs.content }}"
       - name: Output Run ID
         run: echo ${{ github.run_id }}
       - name: Output Run Number
         run: echo ${{ github.run_number }}
       - name: Output Run Attempt
         run: echo ${{ github.run_attempt }}
-      - name: Save Run ID
-        run: echo "${{ github.run_id }}" >> version-data.txt
+      - name: Update Cargo.toml
+        run: echo "${{ steps.cargo-set-version.outputs.content }}" > Cargo.toml
       - name: Add and commit
-        run: git add version-data.txt
+        run: git add Cargo.toml
       - name: Add and commit
-        run: git commit -m "update build number to ${{ github.run_id }}"
+        run: git commit -m "build ${{ steps.cargo-set-version.outputs.version }}"
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
