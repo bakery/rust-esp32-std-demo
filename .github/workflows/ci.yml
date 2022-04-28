@@ -13,7 +13,11 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - uses: "bakery/actions-cargo-get-version@v1"
+      - name: Cargo | Get version
+        id: cargo-get-version
+        uses: "bakery/actions-cargo-get-version@v1"
+      - name: Debug | Show version
+        run: echo "Detected version is ${{ steps.cargo-get-version.outputs.version }}"
       - name: Configure | Esp toolchain
         run: rustup default esp
       - name: Build | Cargo
