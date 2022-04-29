@@ -1109,6 +1109,61 @@ fn httpd(mutex: Arc<(Mutex<Option<u32>>, Condvar)>) -> Result<idf::Server> {
                 .body("You have no permissions to access this page".into())
                 .into()
         })?
+        .at("/api/version").get(move |_| {
+            let version = env!("CARGO_PKG_VERSION");
+            Ok(embedded_svc::httpd::Response::from(version))
+        })?
+        .at("/api/ota").get(move |_| {
+            // use embedded_svc::http::{self, client::*, status, Headers, Status};
+            // use embedded_svc::io::Bytes;
+            // use esp_idf_svc::http::client::*;
+            // use embedded_svc::ota::{Ota, OtaSlot, OtaUpdate};
+            // use esp_idf_svc::ota::{EspOta};
+            // use embedded_svc::io::{Write};
+    
+            // let mut ota = EspOta::new().unwrap();
+            // let mut client = EspHttpClient::new_default()?;
+            // let response = client.get(&String::from("FIRMWARE_URL_HERE"))?.submit()?;
+    
+            // info!(">>>>>>>>>>>>>>>> initiating OTA update");
+    
+            // let mut ota_update = ota.initiate_update().unwrap();
+            // let mut firmware_update_ok = true;
+    
+            // loop {
+            //     let bytes_to_take = 10 * 1024;
+            //     let body: Result<Vec<u8>, _> = Bytes::<_, 64>::new(response.reader()).take(bytes_to_take).collect();
+            //     let body = body?;
+            //     info!(">>>>>>>>>>>>>> got new firmware batch {:?}", body.len());
+    
+            //     match ota_update.do_write(&body) {
+            //         Ok(buff_len) => info!("wrote update: {:?}", buff_len),
+            //         Err(err) => {
+            //             info!("failed to write update with: {:?}", err);
+            //             firmware_update_ok = false;
+            //             break;
+            //         }
+            //     }
+    
+            //     if body.len() < bytes_to_take {
+            //         break;
+            //     }
+            // }
+    
+            // info!(">>>>>>>>>>>>>>>> firmware update ok says: {:?}", firmware_update_ok);
+    
+            // if firmware_update_ok {
+            //     ota_update.complete().unwrap();
+            // } else {
+            //     ota_update.abort().unwrap();
+            // }
+    
+            // info!(">>>>>>>>>>>>>>>> completed firmware update");
+    
+            // esp_idf_sys::esp_restart();
+    
+            Ok(embedded_svc::httpd::Response::from("hello there"))
+        })?
         .at("/panic")
         .get(|_| panic!("User requested a panic!"))?;
 
