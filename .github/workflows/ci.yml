@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - ci
+      - feature/ota-updates
 
 env:
   cargo_file_path: ./Cargo.toml
