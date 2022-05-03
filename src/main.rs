@@ -156,7 +156,7 @@ fn httpd(mutex: Arc<(Mutex<Option<u32>>, Condvar)>, request_restart: Arc<Mutex<b
         <!DOCTYPE html>
         <html>
             <body>
-                <h1>Hello from Rust!</h1>
+                <h1>Firmware OTA updates</h1>
                 <form method="post" action="/api/ota" enctype="application/x-www-form-urlencoded">
                     Firmware to use
                     <select name="firmware" disabled="">
