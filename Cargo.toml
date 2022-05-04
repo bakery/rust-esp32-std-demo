@@ -27,14 +27,17 @@ anyhow = {version = "1", features = ["backtrace"]}
 log = "0.4"
 url = "2"
 esp-idf-sys = { version = "0.31", features = ["binstart"] }
-esp-idf-svc = "0.40"
-esp-idf-hal = "0.36"
-embedded-svc = "0.20"
+esp-idf-svc = "0.41"
+esp-idf-hal = "0.37"
+embedded-svc = "0.21"
 embedded-hal = "0.2"
 
 [build-dependencies]
-embuild = "0.28.2"
+embuild = "0.29"
 anyhow = "1"
+
+[patch.crates-io]
+esp-idf-svc = { git = 'https://github.com/bakery/esp-idf-svc', branch = 'http-client-buffer-size-tx' }
 
 # Future; might be possible once https://github.com/rust-lang/cargo/issues/9096 hits Cargo nightly:
 #rust-esp32-ulp-blink = { git = "https://github.com/ivmarkov/rust-esp32-ulp-blink", artifact = "bin" }

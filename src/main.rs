@@ -54,8 +54,8 @@ use esp_idf_hal::i2c;
 use esp_idf_hal::prelude::*;
 use esp_idf_hal::spi;
 
-use esp_idf_sys::esp;
 use esp_idf_sys::{self, c_types};
+use esp_idf_sys::{esp, EspError};
 
 thread_local! {
     static TLS: RefCell<u32> = RefCell::new(13);
@@ -138,7 +138,7 @@ fn main() -> Result<()> {
         info!("Wifi stopped");
     }
 
-    if (*request_restart.lock().unwrap()) {
+    if *request_restart.lock().unwrap() {
         unsafe {
             info!("Restarting...");
             esp_idf_sys::esp_restart();
@@ -238,7 +238,11 @@ fn httpd(mutex: Arc<(Mutex<Option<u32>>, Condvar)>, request_restart: Arc<Mutex<b
             info!("Gonna use firmware from: {:?}", firmware);
 
             let mut ota = EspOta::new().unwrap();
-            let mut client = EspHttpClient::new_default()?;
+            let mut client = EspHttpClient::new(&EspHttpClientConfiguration {
+                crt_bundle_attach: Some(esp_idf_sys::esp_crt_bundle_attach),
+                buffer_size_tx: Some(1024),
+                ..Default::default()
+            })?;
             let response = client.get(firmware)?.submit()?;
     
             info!(">>>>>>>>>>>>>>>> initiating OTA update");
