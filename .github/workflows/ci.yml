@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - name: Debug | Secrets
+        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=${{ env.wifi_ssid }}; echo $RUST_ESP32_STD_DEMO_WIFI_SSID
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Set version
         id: cargo-set-version
