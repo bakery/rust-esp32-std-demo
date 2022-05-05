@@ -322,49 +322,44 @@ fn wifi(
         None
     };
 
-    wifi.set_configuration(&Configuration::Mixed(
-        ClientConfiguration {
-            ssid: SSID.into(),
-            password: PASS.into(),
-            channel,
-            ..Default::default()
-        },
-        AccessPointConfiguration {
-            ssid: "aptest".into(),
-            channel: channel.unwrap_or(1),
-            ..Default::default()
-        },
-    ))?;
+    // wifi.set_configuration(&Configuration::Mixed(
+    //     ClientConfiguration {
+    //         ssid: SSID.into(),
+    //         password: PASS.into(),
+    //         channel,
+    //         ..Default::default()
+    //     },
+    //     AccessPointConfiguration {
+    //         ssid: "aptest".into(),
+    //         channel: channel.unwrap_or(1),
+    //         ..Default::default()
+    //     },
+    // ))?;
+    wifi.set_configuration(&Configuration::Client(ClientConfiguration {
+        ssid: SSID.into(),
+        password: PASS.into(),
+        channel,
+        ..Default::default()
+    }))?;
 
     info!("Wifi configuration set, about to get status");
 
-    let mut did_wait_for_status = false;
-
-    loop {
-        info!(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> checking WIFI <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-
-        let status = wifi.get_status();
-
-        if let Status(
-            ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(ip_settings))),
-            ApStatus::Started(ApIpStatus::Done),
-        ) = status
-        {
-            info!("Wifi connected");
-
-            ping(&ip_settings)?;
-
-            break;
-        } else {
-            if did_wait_for_status {
-                bail!("Unexpected Wifi status: {:?}", status);
-            }
-
-            wifi.wait_status_with_timeout(Duration::from_secs(20), |status| !status.is_transitional())
+    wifi.wait_status_with_timeout(Duration::from_secs(20), |status| !status.is_transitional())
                 .map_err(|e| anyhow::anyhow!("Unexpected Wifi status: {:?}", e))?;
-            
-            did_wait_for_status = true;
-        }
+
+    let status = wifi.get_status();
+
+    if let Status(
+        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(ip_settings))),
+        _
+        // ApStatus::Started(ApIpStatus::Done),
+    ) = status
+    {
+        info!("Wifi connected");
+
+        ping(&ip_settings)?;
+    } else {
+        bail!("Unexpected Wifi status: {:?}", status);
     }
 
     Ok(wifi)
