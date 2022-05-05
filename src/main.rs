@@ -65,7 +65,7 @@ thread_local! {
 const SSID: &str = env!("RUST_ESP32_STD_DEMO_WIFI_SSID");
 #[allow(dead_code)]
 const PASS: &str = env!("RUST_ESP32_STD_DEMO_WIFI_PASS");
-
+const version: &str = env!("CARGO_PKG_VERSION");
 
 fn main() -> Result<()> {
     esp_idf_sys::link_patches();
@@ -88,6 +88,7 @@ fn main() -> Result<()> {
     let request_restart = Arc::new(Mutex::new(false));
 
     info!("WIFI setup information: {:?} with {:?}", SSID, PASS);
+    info!("Current version {:?}", version);
 
     #[allow(clippy::redundant_clone)]
     #[allow(unused_mut)]
@@ -218,7 +219,6 @@ fn httpd(mutex: Arc<(Mutex<Option<u32>>, Condvar)>, request_restart: Arc<Mutex<b
                 .into()
         })?
         .at("/api/version").get(move |_| {
-            let version = env!("CARGO_PKG_VERSION");
             Ok(embedded_svc::httpd::Response::from(version))
         })?
         .at("/api/ota").post(move |mut request| {
