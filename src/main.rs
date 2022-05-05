@@ -181,7 +181,7 @@ fn httpd(mutex: Arc<(Mutex<Option<u32>>, Condvar)>, request_restart: Arc<Mutex<b
                     };
 
                     const getAvailableReleases = async () => {
-                        const r = await fetch("https://api.github.com/repos/bakery/rust-esp32-std-demo/releases");
+                        const r = await fetch("https://raw.githubusercontent.com/bakery/rust-esp32-std-demo/feature/ota-updates/bin/releases.json");
                         return r.json();
                     };
 
