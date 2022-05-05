@@ -338,21 +338,31 @@ fn wifi(
 
     info!("Wifi configuration set, about to get status");
 
-    wifi.wait_status_with_timeout(Duration::from_secs(20), |status| !status.is_transitional())
-        .map_err(|e| anyhow::anyhow!("Unexpected Wifi status: {:?}", e))?;
+    let mut did_wait_for_status = false;
 
-    let status = wifi.get_status();
+    loop {
+        info!(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> checking WIFI <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
-    if let Status(
-        ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(ip_settings))),
-        ApStatus::Started(ApIpStatus::Done),
-    ) = status
-    {
-        info!("Wifi connected");
+        let status = wifi.get_status();
 
-        ping(&ip_settings)?;
-    } else {
-        bail!("Unexpected Wifi status: {:?}", status);
+        if let Status(
+            ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(ip_settings))),
+            ApStatus::Started(ApIpStatus::Done),
+        ) = status
+        {
+            info!("Wifi connected");
+
+            ping(&ip_settings)?;
+        } else {
+            if did_wait_for_status {
+                bail!("Unexpected Wifi status: {:?}", status);
+            }
+
+            wifi.wait_status_with_timeout(Duration::from_secs(20), |status| !status.is_transitional())
+                .map_err(|e| anyhow::anyhow!("Unexpected Wifi status: {:?}", e))?;
+            
+            did_wait_for_status = true;
+        }
     }
 
     Ok(wifi)
