@@ -87,6 +87,8 @@ fn main() -> Result<()> {
 
     let request_restart = Arc::new(Mutex::new(false));
 
+    info!("WIFI setup information: {:?} with {:?}", SSID, PASS);
+
     #[allow(clippy::redundant_clone)]
     #[allow(unused_mut)]
     let mut wifi = wifi(
