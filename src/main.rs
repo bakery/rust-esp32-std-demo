@@ -353,6 +353,8 @@ fn wifi(
             info!("Wifi connected");
 
             ping(&ip_settings)?;
+
+            break;
         } else {
             if did_wait_for_status {
                 bail!("Unexpected Wifi status: {:?}", status);
