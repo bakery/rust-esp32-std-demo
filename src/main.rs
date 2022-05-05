@@ -322,25 +322,19 @@ fn wifi(
         None
     };
 
-    // wifi.set_configuration(&Configuration::Mixed(
-    //     ClientConfiguration {
-    //         ssid: SSID.into(),
-    //         password: PASS.into(),
-    //         channel,
-    //         ..Default::default()
-    //     },
-    //     AccessPointConfiguration {
-    //         ssid: "aptest".into(),
-    //         channel: channel.unwrap_or(1),
-    //         ..Default::default()
-    //     },
-    // ))?;
-    wifi.set_configuration(&Configuration::Client(ClientConfiguration {
-        ssid: SSID.into(),
-        password: PASS.into(),
-        channel,
-        ..Default::default()
-    }))?;
+    wifi.set_configuration(&Configuration::Mixed(
+        ClientConfiguration {
+            ssid: SSID.into(),
+            password: PASS.into(),
+            channel,
+            ..Default::default()
+        },
+        AccessPointConfiguration {
+            ssid: "aptest".into(),
+            channel: channel.unwrap_or(1),
+            ..Default::default()
+        },
+    ))?;
 
     info!("Wifi configuration set, about to get status");
 
@@ -351,8 +345,7 @@ fn wifi(
 
     if let Status(
         ClientStatus::Started(ClientConnectionStatus::Connected(ClientIpStatus::Done(ip_settings))),
-        _
-        // ApStatus::Started(ApIpStatus::Done),
+        ApStatus::Started(ApIpStatus::Done),
     ) = status
     {
         info!("Wifi connected");
