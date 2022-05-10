@@ -22,8 +22,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           set-safe-directory: false
-      - name: Debug | Secrets
-        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=${{ env.wifi_ssid }}; echo $RUST_ESP32_STD_DEMO_WIFI_SSID
+      - name: Debug | Toolchain
+        run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Set version
         id: cargo-set-version
