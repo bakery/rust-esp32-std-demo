@@ -17,7 +17,9 @@ jobs:
     container: sergiogasquez/esp-rs-env:esp32
     steps:
       - name: Setup | Checkout
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v3
+        with:
+          set-safe-directory: false
       - name: Debug | Secrets
         run: export RUST_ESP32_STD_DEMO_WIFI_SSID=${{ env.wifi_ssid }}; echo $RUST_ESP32_STD_DEMO_WIFI_SSID
       - uses: fregante/setup-git-user@v1.0.1
