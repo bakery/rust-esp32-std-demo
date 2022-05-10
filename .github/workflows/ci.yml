@@ -42,8 +42,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-      - name: Configure | Esp toolchain
-        run: rustup default esp
       - name: Build | Cargo
         run: export RUST_ESP32_STD_DEMO_WIFI_SSID=${{ env.wifi_ssid }}; export RUST_ESP32_STD_DEMO_WIFI_PASS=${{ env.wifi_password }}; cargo espflash --partition-table ./partitions.csv save-image firmware-${{ steps.cargo-set-version.outputs.version }}.bin
       - uses: "marvinpinto/action-automatic-releases@latest"
