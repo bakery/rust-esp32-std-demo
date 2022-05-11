@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - run: su -esp
+      - run: su - esp
       - name: Debug | Toolchain
         run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
