@@ -7,21 +7,19 @@ on:
 
 env:
   cargo_file_path: ./Cargo.toml
-  wifi_ssid: ${{ secrets.RUST_ESP32_STD_DEMO_WIFI_SSID }}
-  wifi_password: ${{ secrets.RUST_ESP32_STD_DEMO_WIFI_PASS }}
+  wifi_ssid: NOT_AN_SSID
+  wifi_password: NOT_A_PASS
 
 jobs:
   compile:
     name: Build
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user esp
+      options: --user 1000:1000
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      - name: Rust | Debug
-        run: ls -al
       - name: Debug | Toolchain
         run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
