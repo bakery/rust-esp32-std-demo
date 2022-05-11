@@ -16,13 +16,17 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user root
+      options: --user esp
     steps:
-      - name: Setup | Checkout
-        uses: actions/checkout@v2
-      - run: su - esp
+      # - name: Setup | Checkout
+      #   uses: actions/checkout@v2
+      # - run: su - esp
       - name: Debug | Toolchain
         run: rustup toolchain list
+      - name: Debug | ls
+        run: ls -la
+      - name: Debug | ls
+        run: pwd
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Set version
         id: cargo-set-version
