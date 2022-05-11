@@ -16,10 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user 1000:1000
+      options: --user 1000
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+        with:
+          path: ${{ github.workspace }}/
       - name: Debug | Toolchain
         run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
