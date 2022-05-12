@@ -19,7 +19,7 @@ jobs:
       options: --user root
     steps:
       - name: Debug | Users
-        run: cat /etc/passwd
+        run: echo "$USER" && env
       - name: Setup | Checkout
         uses: actions/checkout@v2
       #- name: Debug | Toolchain
