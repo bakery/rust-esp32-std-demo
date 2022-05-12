@@ -19,9 +19,11 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
-      - run: export GITHUB_WORKSPACE=/home/esp/workspace
-      - run: echo $GITHUB_WORKSPACE
+      # - run: export GITHUB_WORKSPACE=/home/esp/workspace
+      # - run: echo $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
+        with:
+          path: /home/esp/
         name: Setup | Checkout
       - name: Debug | Toolchain
         run: rustup toolchain list
