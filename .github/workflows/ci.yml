@@ -9,7 +9,7 @@ env:
   cargo_file_path: ./Cargo.toml
   wifi_ssid: NOT_AN_SSID
   wifi_password: NOT_A_PASS
-  GITHUB_WORKSPACE: /home/esp/workspace
+  # GITHUB_WORKSPACE: /home/esp/workspace
 
 jobs:
   compile:
@@ -19,7 +19,7 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
-      # - run: export GITHUB_WORKSPACE=/home/esp/workspace
+      - run: export GITHUB_WORKSPACE=/home/esp/workspace
       - run: echo $GITHUB_WORKSPACE
       - uses: actions/checkout@v3
         name: Setup | Checkout
