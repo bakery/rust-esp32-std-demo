@@ -18,12 +18,10 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user root
     steps:
-      - name: Debug | Users
-        run: echo "$USER" && env
+      - name: Debug | Toolchain
+        run: export RUSTUP_HOME=/home/esp && rustup toolchain list
       - name: Setup | Checkout
         uses: actions/checkout@v2
-      #- name: Debug | Toolchain
-      #  run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Set version
         id: cargo-set-version
