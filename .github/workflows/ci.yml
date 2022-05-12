@@ -18,6 +18,8 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
+      - name: Debug | Github workspace
+        run: echo "$GITHUB_WORKSPACE"
       - name: Setup | Checkout
         uses: actions/checkout@v2
       - name: Rust | Debug
