@@ -18,14 +18,14 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
-      - name: Debug | Github workspace
-        run: echo "$GITHUB_WORKSPACE"
+      - name: Debug | Toolchain
+        run: rustup toolchain list
       - name: Setup | Checkout
         uses: actions/checkout@v2
       - name: Rust | Debug
         run: ls -al
-      - name: Debug | Toolchain
-        run: rustup toolchain list
+      #- name: Debug | Toolchain
+      #  run: rustup toolchain list
       - uses: fregante/setup-git-user@v1.0.1
       - name: Cargo | Set version
         id: cargo-set-version
