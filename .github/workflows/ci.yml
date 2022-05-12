@@ -16,10 +16,10 @@ jobs:
     runs-on: ubuntu-latest
     container: 
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user esp
+      options: --user root
     steps:
       - name: Debug | Users
-        run: sudo cat /etc/passwd
+        run: cat /etc/passwd
       - name: Setup | Checkout
         uses: actions/checkout@v2
       #- name: Debug | Toolchain
