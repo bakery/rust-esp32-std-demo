@@ -18,8 +18,8 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
-      - name: Debug | Ls
-        run: ls /
+      - name: Debug | Users
+        run: sudo cat /etc/passwd
       - name: Setup | Checkout
         uses: actions/checkout@v2
       #- name: Debug | Toolchain
