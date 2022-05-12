@@ -21,7 +21,7 @@ jobs:
       - name: Prep | Try source
         run: chmod +x /home/esp/export-rust.sh && /home/esp/export-rust.sh
       - name: Debug | Toolchain
-        run: export RUSTUP_HOME=/home/esp && rustup toolchain list
+        run: rustup toolchain list
       - name: Setup | Checkout
         uses: actions/checkout@v2
       - uses: fregante/setup-git-user@v1.0.1
