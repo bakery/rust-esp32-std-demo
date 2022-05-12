@@ -18,6 +18,8 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user root
     steps:
+      - name: Prep | Try source
+        run: source /home/esp/export-rust.sh
       - name: Debug | Toolchain
         run: export RUSTUP_HOME=/home/esp && rustup toolchain list
       - name: Setup | Checkout
