@@ -17,7 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user esp
+      options: |
+        --user esp
+        -e "HOME=/home/esp"
     steps:
       # - run: export GITHUB_WORKSPACE=/home/esp/workspace
       # - run: echo $GITHUB_WORKSPACE
