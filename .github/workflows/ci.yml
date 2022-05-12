@@ -19,7 +19,7 @@ jobs:
       options: --user root
     steps:
       - name: Prep | Try source
-        run: /home/esp/export-rust.sh
+        run: chmod +x /home/esp/export-rust.sh && /home/esp/export-rust.sh
       - name: Debug | Toolchain
         run: export RUSTUP_HOME=/home/esp && rustup toolchain list
       - name: Setup | Checkout
