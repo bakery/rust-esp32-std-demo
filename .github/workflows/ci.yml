@@ -18,11 +18,11 @@ jobs:
       image: sergiogasquez/esp-rs-env:esp32
       options: --user esp
     steps:
-      - name: Setup | Checkout
-        uses: actions/checkout@v2
-        run: |
-          cd /home/esp/
-      - run: su - esp
+      - run: echo $GITHUB_WORKSPACE
+      - uses: actions/checkout@v3
+        name: Setup | Checkout
+        with:
+          path: rust-esp32-demo
       - name: Debug | Toolchain
         run: rustup toolchain list
       - name: Debug | ls
