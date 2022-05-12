@@ -16,11 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: sergiogasquez/esp-rs-env:esp32
-      options: --user 1000
+      options: --user esp
     steps:
-      # - name: Setup | Checkout
-      #   uses: actions/checkout@v2
-      # - run: su - esp
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+        run: |
+          cd /home/esp/
+      - run: su - esp
       - name: Debug | Toolchain
         run: rustup toolchain list
       - name: Debug | ls
