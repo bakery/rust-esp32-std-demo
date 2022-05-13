@@ -21,6 +21,6 @@ echo "$PATH"
 
 # cargo install cargo-espflash
 
-export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp build --partition-table ./partitions.csv
+export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp build
 
 # export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp espflash --partition-table ./partitions.csv save-image firmware-22.bin
