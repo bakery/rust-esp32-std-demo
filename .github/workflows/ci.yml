@@ -1,3 +1,4 @@
+
 name: CI
 
 on:
@@ -7,57 +8,14 @@ on:
 
 env:
   cargo_file_path: ./Cargo.toml
-  wifi_ssid: NOT_AN_SSID
-  wifi_password: NOT_A_PASS
-  # GITHUB_WORKSPACE: /home/esp/workspace
+  wifi_ssid: ${{ secrets.RUST_ESP32_STD_DEMO_WIFI_SSID }}
+  wifi_password: ${{ secrets.RUST_ESP32_STD_DEMO_WIFI_PASS }}
 
 jobs:
   compile:
     name: Build
     runs-on: ubuntu-latest
-    container:
-      image: sergiogasquez/esp-rs-env:esp32
-      options: |
-        --user esp
-        -e "HOME=/home/esp"
     steps:
-      # - run: export GITHUB_WORKSPACE=/home/esp/workspace
-      # - run: echo $GITHUB_WORKSPACE
-      - uses: actions/checkout@v3
-        with:
-          path: /home/esp/
-        name: Setup | Checkout
-      - name: Debug | Toolchain
-        run: rustup toolchain list
-      - name: Debug | ls
-        run: ls -la
-      - name: Debug | ls
-        run: pwd
-      - uses: fregante/setup-git-user@v1.0.1
-      - name: Cargo | Set version
-        id: cargo-set-version
-        uses: "bakery/actions-cargo-set-version@v1.4.0"
-        with:
-          cargoFile: "${{ env.cargo_file_path }}"
-          version: "${{ github.run_number }}"
-          buildNumberOnly: true
-          overwriteCargoFile: true
-      - name: Add and commit
-        run: git add ${{ env.cargo_file_path }}
-      - name: Add and commit
-        run: git commit -m "build ${{ steps.cargo-set-version.outputs.version }}"
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-      - name: Build | Cargo
-        run: export RUST_ESP32_STD_DEMO_WIFI_SSID=${{ env.wifi_ssid }}; export RUST_ESP32_STD_DEMO_WIFI_PASS=${{ env.wifi_password }}; cargo +esp espflash --partition-table ./partitions.csv save-image firmware-${{ steps.cargo-set-version.outputs.version }}.bin
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.cargo-set-version.outputs.version }}"
-          prerelease: true
-          title: "Firmware build ${{ steps.cargo-set-version.outputs.version }}"
-          files: |
-            firmware-${{ steps.cargo-set-version.outputs.version }}.bin
+      - name: Setup | Checkout
+        uses: actions/checkout@v2
+      - uses: ./.github/actions/esp-build
