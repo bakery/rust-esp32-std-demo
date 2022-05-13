@@ -4,8 +4,10 @@ echo "hello $1"
 id -u -n
 
 export PATH=$PATH:/home/esp/.cargo/bin
-
-echo "$PATH"
+source /home/${CONTAINER_USER}/export-rust.sh
+export IDF_TOOLS_PATH=/home/esp/.espressif
+source /home/esp/.espressif/frameworks/esp-idf/export.sh
+# echo "$PATH"
 
 ls -al /home/esp/.cargo/bin
 
