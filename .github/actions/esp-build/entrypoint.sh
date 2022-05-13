@@ -7,7 +7,7 @@ export PATH=$PATH:/home/esp/.cargo/bin
 
 echo "$PATH"
 
-# ls -al /home/esp/.cargo/bin
+ls -al /home/esp/.cargo/bin
 
 # cargo --help
 
