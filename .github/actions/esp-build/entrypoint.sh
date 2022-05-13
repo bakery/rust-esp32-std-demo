@@ -7,6 +7,8 @@ echo "$PATH"
 
 ls -al /home/esp/.cargo/bin
 
+/home/esp/.cargo/bin/cargo --help
+
 #ls /home/esp -al
 #chown -R root:root /home/esp
 #ls /home/esp -al
