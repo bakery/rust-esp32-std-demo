@@ -6,7 +6,7 @@ set -o pipefail
 export PATH=$PATH:/home/esp/.cargo/bin
 . /home/esp/export-rust.sh
 export IDF_TOOLS_PATH=/home/esp/.espressif
-. /home/esp/.espressif/frameworks/esp-idf-v4.4/export.sh
+. /home/esp/.espressif/frameworks/esp-idf/export.sh
 
 bash -c "set -e;  set -o pipefail; $1"
 
