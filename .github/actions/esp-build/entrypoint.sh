@@ -3,11 +3,13 @@
 echo "hello $1"
 id -u -n
 
+export PATH=$PATH:/home/esp/.cargo/bin
+
 echo "$PATH"
 
-ls -al /home/esp/.cargo/bin
+# ls -al /home/esp/.cargo/bin
 
-/home/esp/.cargo/bin/cargo --help
+cargo --help
 
 #ls /home/esp -al
 #chown -R root:root /home/esp
