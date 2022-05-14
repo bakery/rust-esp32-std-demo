@@ -8,9 +8,10 @@ export PATH=$PATH:/home/esp/.cargo/bin
 export IDF_TOOLS_PATH=/home/esp/.espressif
 . /home/esp/.espressif/frameworks/esp-idf/export.sh
 
-chown -R root:root /home/esp/.cargo/bin/
-chmod +x /home/esp/.cargo/bin/cargo-espflash
-ls -al /home/esp/.cargo/bin
+# chown -R root:root /home/esp/.cargo/bin/
+# chmod +x /home/esp/.cargo/bin/cargo-espflash
+# ls -al /home/esp/.cargo/bin
+cargo install cargo-espflash --force
 /home/esp/.cargo/bin/cargo-espflash --help
 
 bash -c "set -e;  set -o pipefail; $1"
