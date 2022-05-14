@@ -8,6 +8,7 @@ export PATH=$PATH:/home/esp/.cargo/bin
 export IDF_TOOLS_PATH=/home/esp/.espressif
 . /home/esp/.espressif/frameworks/esp-idf/export.sh
 
+ls -al /home/esp/.cargo/bin
 /home/esp/.cargo/bin/cargo-espflash --help
 
 bash -c "set -e;  set -o pipefail; $1"
