@@ -8,6 +8,8 @@ export PATH=$PATH:/home/esp/.cargo/bin
 export IDF_TOOLS_PATH=/home/esp/.espressif
 . /home/esp/.espressif/frameworks/esp-idf/export.sh
 
+/home/esp/.cargo/bin/cargo-espflash --help
+
 bash -c "set -e;  set -o pipefail; $1"
 
 # export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp build
