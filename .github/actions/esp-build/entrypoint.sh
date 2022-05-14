@@ -9,6 +9,7 @@ export IDF_TOOLS_PATH=/home/esp/.espressif
 . /home/esp/.espressif/frameworks/esp-idf/export.sh
 
 chown -R root:root /home/esp/.cargo/bin/
+chmod +x /home/esp/.cargo/bin/cargo-espflash
 ls -al /home/esp/.cargo/bin
 /home/esp/.cargo/bin/cargo-espflash --help
 
