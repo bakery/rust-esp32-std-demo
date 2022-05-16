@@ -1,4 +1,3 @@
-# FROM alpine:3.10
 FROM sergiogasquez/esp-rs-env:esp32
 
 USER root
