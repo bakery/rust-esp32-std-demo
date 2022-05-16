@@ -2,15 +2,11 @@ name: "Container Action Template"
 description: "Get started with Container actions"
 author: "GitHub"
 inputs:
-  tag:
-    required: true
-    default: "esp32"
-    description: "Tag for the docker image"
   command:
     required: true
     description: "Command to run"
 runs:
   using: "docker"
-  image: "Dockerfile.${{ inputs.command }}"
+  image: "Dockerfile.esp32"
   args:
     - ${{ inputs.command }}
