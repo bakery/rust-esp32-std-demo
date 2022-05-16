@@ -7,6 +7,6 @@ inputs:
     description: "Command to run"
 runs:
   using: "docker"
-  image: "Dockerfile.esp32"
+  image: "Dockerfile"
   args:
     - ${{ inputs.command }}
