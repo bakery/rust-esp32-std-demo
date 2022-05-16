@@ -17,6 +17,32 @@ jobs:
     steps:
       - name: Setup | Checkout
         uses: actions/checkout@v2
+      - uses: fregante/setup-git-user@v1.0.1
+      - name: Cargo | Set version
+        id: cargo-set-version
+        uses: "bakery/actions-cargo-set-version@v1.4.0"
+        with:
+          cargoFile: "${{ env.cargo_file_path }}"
+          version: "${{ github.run_number }}"
+          buildNumberOnly: true
+          overwriteCargoFile: true
+      - name: Add and commit
+        run: git add ${{ env.cargo_file_path }}
+      - name: Add and commit
+        run: git commit -m "build ${{ steps.cargo-set-version.outputs.version }}"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
       - uses: ./.github/actions/esp-build
         with:
-          command: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp espflash --partition-table ./partitions.csv save-image firmware-22.bin
+          command: export RUST_ESP32_STD_DEMO_WIFI_SSID=ssid; export RUST_ESP32_STD_DEMO_WIFI_PASS=pass; cargo +esp espflash --partition-table ./partitions.csv save-image firmware-${{ steps.cargo-set-version.outputs.version }}.bin
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "${{ steps.cargo-set-version.outputs.version }}"
+          prerelease: true
+          title: "Firmware build ${{ steps.cargo-set-version.outputs.version }}"
+          files: |
+            firmware-${{ steps.cargo-set-version.outputs.version }}.bin
